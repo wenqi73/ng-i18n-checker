@@ -22,8 +22,6 @@ export interface II18nValidatorOptions {
     ignoreTags?: string[];
 }
 
-// tslint:disable:no-string-literal
-
 export class I18nValidator {
     constructor(private options: II18nValidatorOptions = {}) {
         options.ignoreTags = options.ignoreTags || [];
