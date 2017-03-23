@@ -4,11 +4,14 @@ import { existsSync } from 'fs';
 import { sync } from 'glob';
 import { resolve } from 'path';
 
+import { Json } from './reporters/JSON';
 import { Pretty } from './reporters/Pretty';
+
 import { I18nValidator, IProblem, IReporter } from './Validator';
 
 const knownReporters: { [name: string]: IReporter } = {
     pretty: new Pretty(),
+    json: new Json(),
 };
 
 interface ICLIOpts {
@@ -26,7 +29,7 @@ const args: ICLIOpts = yargs.usage(
 .array('reporters')
 .alias('reporters', 'r')
 .default('reporters', ['pretty'])
-.describe('reporters', 'List of reporters to use, can also be path to custom file')
+.describe('reporters', 'List of reporters to use, can also be path to custom file, available are: `pretty` (stderr) and `json` (stdout)')
 
 .array('ignoreTags')
 .alias('ignoreTags', 'i')
