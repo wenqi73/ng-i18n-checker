@@ -6,7 +6,7 @@
   "typings": "dist/Validator.d.ts",
   "scripts": {
     "lint": "tslint --type-check --project tsconfig.json \"src/**/*.ts\"",
-    "test": "mocha --compilers ts:ts-node/register \"src/**/*.test.ts\"",
+    "test": "mocha --timeout 10000 --compilers ts:ts-node/register \"src/**/*.test.ts\"",
     "build": "rimraf dist && tsc",
     "prepublish": "npm run lint && npm run test && npm run build"
   },
