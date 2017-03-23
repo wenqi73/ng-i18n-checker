@@ -12,7 +12,7 @@ describe('Validator', () => {
                 line: 1,
                 meta: 'Hello!',
                 problem: 'missing',
-            }
+            },
         },
         {
             name: 'Reports invalid i18n formats',
@@ -22,7 +22,7 @@ describe('Validator', () => {
                 line: 1,
                 meta: 'Hello',
                 problem: 'format',
-            }
+            },
         },
         {
             name: 'Reports nested i18n tags',
