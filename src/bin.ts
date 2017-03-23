@@ -29,6 +29,7 @@ const args: ICLIOpts = yargs.usage(
 .array('reporters')
 .alias('reporters', 'r')
 .default('reporters', ['pretty'])
+.choices('reporters', ['pretty', 'json'])
 .describe('reporters', 'List of reporters to use, can also be path to custom file, available are: `pretty` (stderr) and `json` (stdout)')
 
 .array('ignoreTags')
