@@ -24,6 +24,7 @@ const args: ICLIOpts = yargs.usage(
 )
 .help()
 .array('reporters')
+.alias('reporters', 'r')
 .default('reporters', ['pretty'])
 .describe('reporters', 'List of reporters to use, can also be path to custom file')
 
@@ -59,7 +60,7 @@ let filesFound = false;
 const reporters: IReporter[] = args.reporters.map(nameOrFile => {
     const potentialFilePath = resolve(nameOrFile);
     if (existsSync(potentialFilePath)) {
-        return require(potentialFilePath); // tslint:disable-line non-literal-require
+        return new (require(potentialFilePath))(); // tslint:disable-line non-literal-require
     }
     if (nameOrFile in knownReporters) {
         return knownReporters[nameOrFile];

@@ -48,4 +48,9 @@ describe('Validator', () => {
         const problems = validator.processFile('dummy', '<span i18n="Greeting:Hello user">Hello <span>User!</span></span>');
         expect(problems).to.deep.equal([]);
     });
+
+    it('Does not report ignored tags', () => {
+        const problems = validator.processFile('dummy', '<code>asdfsgf</code>');
+        expect(problems).to.deep.equal([]);
+    });
 });
