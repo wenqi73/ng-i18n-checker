@@ -23,6 +23,7 @@
     "no-require-imports": false, // needed for lodash minimal imports.
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"], // for unused params
 
-    "no-increment-decrement": false
+    "no-increment-decrement": false,
+    "no-string-literal": false
   }
 }
