@@ -2,8 +2,8 @@
   "name": "ng-18n-checker",
   "version": "0.1.0",
   "description": "Utility validate i18n attribution for angular >= 2 projects.",
-  "main": "dist/Validator.d.ts",
-  "typings": "",
+  "main": "dist/Validator.js",
+  "typings": "dist/Validator.d.ts",
   "scripts": {
     "lint": "tslint --type-check --project tsconfig.json \"src/**/*.ts\"",
     "test": "mocha --compilers ts:ts-node/register \"src/**/*.test.ts\"",
