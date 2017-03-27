@@ -20,11 +20,20 @@ export interface IProblem {
 export interface II18nValidatorOptions {
     attrPattern?: RegExp;
     ignoreTags?: string[];
+    templateMatcher?: RegExp;
+    assumeTextCondition?: RegExp;
 }
 
 export class I18nValidator {
+
+    public static readonly defaultAttributeMacher = /^([\w-]+)#(\w+):(\w+)\|.*?$/;
+    public static readonly defaultTemplateMatcher = /\{\{.*?\}\}/g;
+    public static readonly defaultAssumeTextCondition = /\w{2,}/;
+
     constructor(private options: II18nValidatorOptions = {}) {
         options.ignoreTags = options.ignoreTags || [];
+        options.templateMatcher = options.templateMatcher || I18nValidator.defaultTemplateMatcher;
+        options.assumeTextCondition = options.assumeTextCondition || I18nValidator.defaultAssumeTextCondition;
     }
 
     public processFile(fileName: string, contents: string = readFileSync(fileName, 'utf8')): IProblem[] {
@@ -80,10 +89,10 @@ export class I18nValidator {
                         return;
                     }
 
+                    const unTemplated = text.replace(this.options.templateMatcher, '');
                     const trimmed = text.trim();
-                    const isTemplateExpr = trimmed.startsWith('{{') && trimmed.endsWith('}}');
-                    const containsAnythingMeaningful = trimmed.match(/\w/);
-                    if (trimmed !== '' && !isTemplateExpr && containsAnythingMeaningful && !stack.some(p => !!p.i18n)) {
+                    const containsAnythingMeaningful = this.options.assumeTextCondition.test(unTemplated);
+                    if (trimmed !== '' && containsAnythingMeaningful && !stack.some(p => !!p.i18n)) {
                         problems.push({
                             fileName,
                             line: matchLine(trimmed.split('\n')[0]),

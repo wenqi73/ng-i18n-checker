@@ -44,6 +44,16 @@ describe('Validator', () => {
             html: '<code>asdfsgf</code>',
             result: true,
         },
+        {
+            name: 'Does not report template tags',
+            html: '<span>{{test}}</span>',
+            result: true,
+        },
+        {
+            name: 'Does not report template tags with simple additions',
+            html: '<span> /${{test}}$. %</span>',
+            result: true,
+        },
     ];
 
     let validator: I18nValidator;

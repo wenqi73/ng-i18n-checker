@@ -18,6 +18,8 @@ interface ICLIOpts {
     reporters: string[];
     ignoreTags: string[];
     attributePattern: RegExp;
+    templateMatcher: RegExp;
+    assumeTextCondition: RegExp;
     _: string[];
     help: boolean;
 }
@@ -38,9 +40,21 @@ const args: ICLIOpts = yargs.usage(
 
 .string('attributePattern')
 .alias('attributePattern', 'p')
-.default('attributePattern', /^([\w-]+)#(\w+):(\w+)\|.*?$/.source)
+.default('attributePattern', I18nValidator.defaultAttributeMacher.source)
 .coerce<string, RegExp>('attributePattern', str => new RegExp(str))
 .describe('attributePattern', 'Pattern to match the i18n attribute content with')
+
+.string('templateMatcher')
+.alias('templateMatcher', 't')
+.default('templateMatcher', I18nValidator.defaultTemplateMatcher.source)
+.coerce<string, RegExp>('templateMatcher', str => new RegExp(str))
+.describe('templateMatcher', 'Pattern to identify the templates used delimiters')
+
+.string('assumeTextCondition')
+.alias('assumeTextCondition', 'a')
+.default('assumeTextCondition', I18nValidator.defaultAssumeTextCondition.source)
+.coerce<string, RegExp>('assumeTextCondition', str => new RegExp(str))
+.describe('assumeTextCondition', 'Pattern to identify minimal text that should force a translation to be present.')
 .argv;
 
 if (args.help) {
@@ -54,6 +68,8 @@ if (args._.length === 0) {
 const validator = new I18nValidator({
     attrPattern: args.attributePattern,
     ignoreTags: args.ignoreTags,
+    templateMatcher: args.templateMatcher,
+    assumeTextCondition: args.assumeTextCondition,
 });
 
 let problems: IProblem[] = [];
