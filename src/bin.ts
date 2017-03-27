@@ -38,7 +38,7 @@ const args: ICLIOpts = yargs.usage(
 
 .string('attributePattern')
 .alias('attributePattern', 'p')
-.default('attributePattern', /^([\w-]+)#(\w+):(\w+)\|.*?$/.toString())
+.default('attributePattern', /^([\w-]+)#(\w+):(\w+)\|.*?$/.source)
 .coerce<string, RegExp>('attributePattern', str => new RegExp(str))
 .describe('attributePattern', 'Pattern to match the i18n attribute content with')
 .argv;
