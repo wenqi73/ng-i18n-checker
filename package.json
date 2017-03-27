@@ -1,5 +1,5 @@
 {
-  "name": "ng-18n-checker",
+  "name": "ng-i18n-checker",
   "version": "0.1.0",
   "description": "Utility validate i18n attribution for angular >= 2 projects.",
   "main": "dist/Validator.js",
@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WatchBeam/ng-18n-checker.git"
+    "url": "git+https://github.com/WatchBeam/ng-i18n-checker.git"
   },
   "author": {
     "name": "Simon Schick",
