@@ -20,6 +20,11 @@ describe('Validator', () => {
             result: true,
         },
         {
+            name: 'Ignores deep flagged',
+            html: '<span><!-- i18n-checker:disable -->Hello!<span>sub</span></span>',
+            result: true,
+        },
+        {
             name: 'Reports invalid i18n formats',
             html: '<span i18n="Hello">Hello!</span>',
             result: {
