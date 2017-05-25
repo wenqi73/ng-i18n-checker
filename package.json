@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WatchBeam/ng-i18n-checker.git"
+    "url": "git+https://github.com/mixer/ng-i18n-checker.git"
   },
   "author": {
     "name": "Simon Schick",
