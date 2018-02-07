@@ -8,7 +8,8 @@
     "lint": "tslint --type-check --project tsconfig.json \"src/**/*.ts\"",
     "test": "mocha --timeout 10000 --compilers ts:ts-node/register \"src/**/*.test.ts\"",
     "build": "rimraf dist && tsc",
-    "prepublish": "npm run lint && npm run test && npm run build"
+    "prepublish": "npm run lint && npm run test && npm run build",
+    "fmt": "prettier --write \"src/**/*.{js,json,ts}\" && npm run lint -- --fix"
   },
   "bin": {
     "ng-i18n-checker": "./dist/bin.js"
@@ -43,6 +44,7 @@
     "@types/yargs": "^6.6.0",
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
+    "prettier": "^1.10.2",
     "rimraf": "^2.6.1",
     "ts-node": "^3.0.2",
     "tslint": "^4.5.1",
@@ -51,5 +53,11 @@
   },
   "engines": {
     "node": ">=6.0.0"
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "singleQuote": true,
+    "printWidth": 100,
+    "tabWidth": 2
   }
 }
