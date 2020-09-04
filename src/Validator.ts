@@ -73,64 +73,68 @@ export class I18nValidator {
     const stack: IElementEntry[] = [];
     let curr: IElementEntry;
 
-    new Parser(
-      {
-        onopentag: (tag: string, attributes: { [attrName: string]: string }) => {
-          // Check if any parent element already has i18n
-          const i18nParent = stack.find(p => !!p.i18n);
-          if (i18nParent && attributes['i18n']) {
-            problems.push({
-              fileName,
-              line: matchLine(i18nParent.i18n),
-              problem: 'nested',
-              meta: curr.i18n,
-            });
-          }
-          stack.push(
-            (curr = {
-              tag,
-              ignored: curr ? curr.ignored : false,
-              i18n: attributes['i18n'],
-            }),
-          );
-          if (!attributes['i18n']) {
-            return;
-          }
-          // Format mismatch
-          const match = attributes['i18n'].match(this.options.attrPattern);
-          if (!match) {
-            problems.push({
-              fileName,
-              line: matchLine(attributes['i18n']),
-              problem: 'format',
-              meta: attributes['i18n'],
-            });
-          }
+    if (fileName.endsWith('.html')) {
+      new Parser(
+        {
+          onopentag: (tag: string, attributes: { [attrName: string]: string }) => {
+            // Check if any parent element already has i18n
+            const i18nParent = stack.find(p => !!p.i18n);
+            if (i18nParent && attributes['i18n']) {
+              problems.push({
+                fileName,
+                line: matchLine(i18nParent.i18n),
+                problem: 'nested',
+                meta: curr.i18n,
+              });
+            }
+            stack.push(
+              (curr = {
+                tag,
+                ignored: curr ? curr.ignored : false,
+                i18n: attributes['i18n'],
+              }),
+            );
+            if (!attributes['i18n']) {
+              return;
+            }
+            // Format mismatch
+            const match = attributes['i18n'].match(this.options.attrPattern);
+            if (!match) {
+              problems.push({
+                fileName,
+                line: matchLine(attributes['i18n']),
+                problem: 'format',
+                meta: attributes['i18n'],
+              });
+            }
+          },
+          oncomment: (comment: string) => {
+            if (this.options.ignoreComment.test(comment)) {
+              curr.ignored = true;
+            }
+          },
+          ontext: (text: string) => {
+            if (this.shouldWarnAbout(stack, text)) {
+              problems.push({
+                fileName,
+                line: matchLine(text.trim().split('\n')[0]),
+                problem: 'missing',
+                meta: text.trim(),
+              });
+            }
+          },
+          onclosetag: () => {
+            stack.pop();
+            curr = stack[stack.length - 1];
+          },
         },
-        oncomment: (comment: string) => {
-          if (this.options.ignoreComment.test(comment)) {
-            curr.ignored = true;
-          }
+        {
+          recognizeSelfClosing: true,
         },
-        ontext: (text: string) => {
-          if (this.shouldWarnAbout(stack, text)) {
-            problems.push({
-              fileName,
-              line: matchLine(text.trim().split('\n')[0]),
-              problem: 'missing',
-              meta: text.trim(),
-            });
-          }
-        },
-        onclosetag: () => {
-          stack.pop();
-          curr = stack[stack.length - 1];
-        },
-      },
-      {
-        recognizeSelfClosing: true,
-      },
-    ).parseComplete(contents);
+      ).parseComplete(contents);
+    } else if (fileName.endsWith('.ts')) {
+
+    }
 
     return problems;
   }

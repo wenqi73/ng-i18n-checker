@@ -1,0 +1,37 @@
+<div class="explorer">
+  <div class="tree">
+    <nz-tree
+      nzNoAnimation
+      [nzData]="treeNode"
+      [nzSearchValue]="searchValue"
+      [nzSelectedKeys]="selectedKeys"
+      [nzTreeTemplate]="nzTreeTemplate"
+      (nzClick)="onNodeClick(); selectNode($event.node.origin)"
+    ></nz-tree>
+  </div>
+  Hello Angular
+  <div class="expand-panel">
+    <neo-editor-panel-header>
+      <ng-container>No Item Selected</ng-container>
+    </neo-editor-panel-header>
+    <div class="detail">
+      <nz-descriptions
+        *ngIf="expandData; else notSelectedTemplate"
+        nzSize="small"
+        [nzColumn]="1"
+        nzLayout="vertical"
+        [nzColon]="false"
+        nzBordered
+      >
+        <nz-descriptions-item *ngFor="let item of expandData.data" [nzTitle]="item.key">
+          {{ item.value }}
+        </nz-descriptions-item>
+      </nz-descriptions>
+    </div>
+  </div>
+</div>
+<ng-template #notSelectedTemplate>
+  <div class="not-selected" i18n="@@editor.sidebar.schemas.noSelected">
+    No Table / Function Selected
+  </div>
+</ng-template>

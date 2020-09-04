@@ -1,8 +1,4 @@
 {
-  "extends": "tslint-microsoft-contrib",
-  "rulesDirectory": [
-    "node_modules/tslint-microsoft-contrib"
-  ],
   "rules": {
     "no-relative-imports": false,
     "mocha-no-side-effect-code": false,
